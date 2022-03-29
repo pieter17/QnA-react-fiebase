@@ -1,11 +1,21 @@
+import { database } from './firebase';
 import './App.css';
+import { useEffect, useState } from 'react';
 
-function App() {
+const App = () => {
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    database.ref('/').on('value', (snapshot) => {
+      setData(snapshot.val());
+    });
+  }, []);
+
   return (
     <div className='App'>
-      <p>Data from firebase will be here soon.</p>
+      <p>{JSON.stringify(data)}</p>
     </div>
   );
-}
+};
 
 export default App;
